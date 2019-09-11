@@ -19,13 +19,13 @@ func TestOpcode_Disassemble(t *testing.T) {
 	cases := []testCase{
 		{
 			label:               "6xkk",
-			opcode:              disassembler.Opcode{MostSignificantByte: 0x62, LeastSignificantByte: 0x08},
+			opcode:              0x6208,
 			expectedName:        "MVI",
 			expectedInstruction: "V2,#$08",
 		},
 		{
 			label:               "Annn",
-			opcode:              disassembler.Opcode{MostSignificantByte: 0xA2, LeastSignificantByte: 0x20},
+			opcode:              0xA220,
 			expectedName:        "MVI",
 			expectedInstruction: "I,#$220",
 		},
@@ -33,7 +33,7 @@ func TestOpcode_Disassemble(t *testing.T) {
 	for _, c := range cases {
 		t.Run(c.label, func(t *testing.T) {
 			name, instruction, err := c.opcode.Disassemble()
-			require.NoError(t, err)
+			require.NoError(t, err, "received 0x%X", c.opcode)
 
 			assert.Equal(t, c.expectedName, name)
 			assert.Equal(t, c.expectedInstruction, instruction)
@@ -42,7 +42,7 @@ func TestOpcode_Disassemble(t *testing.T) {
 }
 
 func TestOpcode_DisassembleUnknownOpcode(t *testing.T) {
-	unknownOpcode := disassembler.Opcode{MostSignificantByte: 0x00, LeastSignificantByte: 0x00}
+	unknownOpcode := disassembler.Opcode(0x0000)
 	_, _, err := unknownOpcode.Disassemble()
 	require.Error(t, err)
 	require.Equal(t, err, disassembler.UnknownOpError)
