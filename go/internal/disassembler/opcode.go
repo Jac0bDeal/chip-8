@@ -5,38 +5,39 @@ import (
 	"fmt"
 )
 
-// UnknownOpError represents an unknown Opcode
-var UnknownOpError = errors.New("unknown opcode")
+// ErrUnknownOp represents an unknown Opcode.
+var ErrUnknownOp = errors.New("unknown opcode")
 
 // Opcode represents a single CHIP-8 operation.
 type Opcode uint16
 
-func (o Opcode) Bytes() (high, low byte) {
+// Bytes splits the opcode into its respective bytes and returns them.
+func (o Opcode) Bytes() (firstByte, secondByte byte) {
 	return byte(o >> 8), byte(o)
 }
 
 // Disassemble returns the Opcode's name and instruction. If the Opcode is
-// unknown then UnknownOpError will be returned.
+// unknown then ErrUnknownOp will be returned.
 func (o Opcode) Disassemble() (name, instruction string, err error) {
-	high, low := o.Bytes()
+	firstByte, secondByte := o.Bytes()
 
-	switch high >> 4 {
+	switch firstByte >> 4 {
 	case 0x06:
 		name = "MVI"
 		instruction = fmt.Sprintf(
 			"V%01X,#$%02x",
-			high&0xF,
-			low,
+			firstByte&0xF,
+			secondByte,
 		)
 	case 0x0A:
 		name = "MVI"
 		instruction = fmt.Sprintf(
 			"I,#$%01x%02x",
-			high&0x0F,
-			low,
+			firstByte&0x0F,
+			secondByte,
 		)
 	default:
-		err = UnknownOpError
+		err = ErrUnknownOp
 	}
 	return
 }

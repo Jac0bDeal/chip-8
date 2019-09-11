@@ -45,5 +45,5 @@ func TestOpcode_DisassembleUnknownOpcode(t *testing.T) {
 	unknownOpcode := disassembler.Opcode(0x0000)
 	_, _, err := unknownOpcode.Disassemble()
 	require.Error(t, err)
-	require.Equal(t, err, disassembler.UnknownOpError)
+	require.Equal(t, err, disassembler.ErrUnknownOp)
 }
