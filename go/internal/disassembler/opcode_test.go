@@ -217,7 +217,7 @@ func TestOpcode_DisassembleUnknownOpcodes(t *testing.T) {
 		},
 		{
 			label:  "unknown f code",
-			opcode: 0x0000,
+			opcode: 0xf000,
 		},
 	}
 	for _, c := range cases {
