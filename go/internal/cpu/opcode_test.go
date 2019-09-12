@@ -6,7 +6,6 @@ import (
 	"chip-8/internal/cpu"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 func TestOpcode_Disassemble(t *testing.T) {
@@ -189,42 +188,42 @@ func TestOpcode_Disassemble(t *testing.T) {
 	}
 	for _, c := range cases {
 		t.Run(c.label, func(t *testing.T) {
-			instruction, err := c.opcode.Instruction()
-			require.NoError(t, err, "received 0x%X", c.opcode, "opcode not recognized")
-
-			assert.Equal(t, c.expectedInstruction, instruction, "incorrect instruction returned for opcode")
+			assert.Equal(t, c.expectedInstruction, c.opcode.Instruction())
 		})
 	}
 }
 
 func TestOpcode_DisassembleUnknownOpcodes(t *testing.T) {
 	type testCase struct {
-		label  string
-		opcode cpu.Opcode
+		label               string
+		opcode              cpu.Opcode
+		expectedInstruction string
 	}
 	cases := []testCase{
 		{
-			label:  "unknown 0 code",
-			opcode: 0x0000,
+			label:               "unknown 0 code",
+			opcode:              0x0000,
+			expectedInstruction: "unknown 0x0XXX opcode",
 		},
 		{
-			label:  "unknown 8 code",
-			opcode: 0x800f,
+			label:               "unknown 8 code",
+			opcode:              0x800f,
+			expectedInstruction: "unknown 0x8XXX opcode",
 		},
 		{
-			label:  "unknown e code",
-			opcode: 0xe000,
+			label:               "unknown e code",
+			opcode:              0xe000,
+			expectedInstruction: "unknown 0xeXXX opcode",
 		},
 		{
-			label:  "unknown f code",
-			opcode: 0xf000,
+			label:               "unknown f code",
+			opcode:              0xf000,
+			expectedInstruction: "unknown 0xfXXX opcode",
 		},
 	}
 	for _, c := range cases {
 		t.Run(c.label, func(t *testing.T) {
-			_, err := c.opcode.Instruction()
-			require.Error(t, err, "should have received an error")
-			require.Equal(t, err, cpu.ErrUnknownOp, "error is not the correct type")
+			assert.Equal(t, c.expectedInstruction, c.opcode.Instruction())
 		})
 	}
 }
