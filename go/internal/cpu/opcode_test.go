@@ -28,12 +28,12 @@ func TestOpcode_Disassemble(t *testing.T) {
 		{
 			label:               "1nnn jump to location nnn",
 			opcode:              0x128A,
-			expectedInstruction: "JUMP       $28A",
+			expectedInstruction: "JUMP       $28a",
 		},
 		{
 			label:               "2nnn call subroutine at nnn",
 			opcode:              0x228A,
-			expectedInstruction: "CALL       $28A",
+			expectedInstruction: "CALL       $28a",
 		},
 		{
 			label:               "3xkk skip next instruction if Vx == kk",
@@ -123,7 +123,7 @@ func TestOpcode_Disassemble(t *testing.T) {
 		{
 			label:               "Cxkk set Vx = random byte AND kk",
 			opcode:              0xC9F2,
-			expectedInstruction: "RND        V9,#$F2",
+			expectedInstruction: "RND        V9,#$f2",
 		},
 		{
 			label:               "Dxyn display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision",
@@ -203,22 +203,22 @@ func TestOpcode_DisassembleUnknownOpcodes(t *testing.T) {
 		{
 			label:               "unknown 0 code",
 			opcode:              0x0000,
-			expectedInstruction: "unknown 0x0XXX opcode",
+			expectedInstruction: cpu.UnknownOpInstruction,
 		},
 		{
 			label:               "unknown 8 code",
 			opcode:              0x800f,
-			expectedInstruction: "unknown 0x8XXX opcode",
+			expectedInstruction: cpu.UnknownOpInstruction,
 		},
 		{
 			label:               "unknown e code",
 			opcode:              0xe000,
-			expectedInstruction: "unknown 0xeXXX opcode",
+			expectedInstruction: cpu.UnknownOpInstruction,
 		},
 		{
 			label:               "unknown f code",
 			opcode:              0xf000,
-			expectedInstruction: "unknown 0xfXXX opcode",
+			expectedInstruction: cpu.UnknownOpInstruction,
 		},
 	}
 	for _, c := range cases {

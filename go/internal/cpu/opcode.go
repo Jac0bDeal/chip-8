@@ -6,6 +6,8 @@ import (
 	"fmt"
 )
 
+const UnknownOpInstruction = "UNK       "
+
 // ErrUnknownOp represents an unknown Opcode.
 var ErrUnknownOp = errors.New("unknown opcode")
 
@@ -39,22 +41,22 @@ func (o Opcode) Instruction() string {
 		case 0xee:
 			return fmt.Sprintf("%-10s", "RTS")
 		default:
-			return "unknown 0x0XXX opcode"
+			return UnknownOpInstruction
 		}
 	case 0x1:
-		return fmt.Sprintf("%-10s $%01x%02X", "JUMP", secondNib, secondByte)
+		return fmt.Sprintf("%-10s $%01x%02x", "JUMP", secondNib, secondByte)
 	case 0x2:
-		return fmt.Sprintf("%-10s $%01x%02X", "CALL", secondNib, secondByte)
+		return fmt.Sprintf("%-10s $%01x%02x", "CALL", secondNib, secondByte)
 	case 0x3:
-		return fmt.Sprintf("%-10s V%01X,#$%02X", "SKIP.EQ", secondNib, secondByte)
+		return fmt.Sprintf("%-10s V%01X,#$%02x", "SKIP.EQ", secondNib, secondByte)
 	case 0x4:
-		return fmt.Sprintf("%-10s V%01X,#$%02X", "SKIP.NE", secondNib, secondByte)
+		return fmt.Sprintf("%-10s V%01X,#$%02x", "SKIP.NE", secondNib, secondByte)
 	case 0x5:
 		return fmt.Sprintf("%-10s V%01X,V%01X", "SKIP.EQ", secondNib, thirdNib)
 	case 0x6:
-		return fmt.Sprintf("%-10s V%01X,#$%02X", "MVI", secondNib, secondByte)
+		return fmt.Sprintf("%-10s V%01X,#$%02x", "MVI", secondNib, secondByte)
 	case 0x7:
-		return fmt.Sprintf("%-10s V%01X,#$%02X", "ADI", secondNib, secondByte)
+		return fmt.Sprintf("%-10s V%01X,#$%02x", "ADI", secondNib, secondByte)
 	case 0x8:
 		switch secondByte & 0xf {
 		case 0x0:
@@ -76,16 +78,16 @@ func (o Opcode) Instruction() string {
 		case 0xe:
 			return fmt.Sprintf("%-10s V%01X", "SHL.", secondNib)
 		default:
-			return "unknown 0x8XXX opcode"
+			return UnknownOpInstruction
 		}
 	case 0x9:
 		return fmt.Sprintf("%-10s V%01X,V%01X", "SKIP.NE", secondNib, thirdNib)
 	case 0xa:
-		return fmt.Sprintf("%-10s I,#$%01x%02X", "MVI", secondNib, secondByte)
+		return fmt.Sprintf("%-10s I,#$%01x%02x", "MVI", secondNib, secondByte)
 	case 0xb:
-		return fmt.Sprintf("%-10s $%01x%02X(V0)", "JUMP", secondNib, secondByte)
+		return fmt.Sprintf("%-10s $%01x%02x(V0)", "JUMP", secondNib, secondByte)
 	case 0xc:
-		return fmt.Sprintf("%-10s V%01X,#$%02X", "RND", secondNib, secondByte)
+		return fmt.Sprintf("%-10s V%01X,#$%02x", "RND", secondNib, secondByte)
 	case 0xd:
 		return fmt.Sprintf("%-10s V%01X,V%01X,#$%01X", "SPRITE.", secondNib, thirdNib, fourthNib)
 	case 0xe:
@@ -95,7 +97,7 @@ func (o Opcode) Instruction() string {
 		case 0xA1:
 			return fmt.Sprintf("%-10s V%01X", "SKIP.NOKEY", secondNib)
 		default:
-			return "unknown 0xeXXX opcode"
+			return UnknownOpInstruction
 		}
 	case 0xf:
 		switch secondByte {
@@ -118,9 +120,9 @@ func (o Opcode) Instruction() string {
 		case 0x65:
 			return fmt.Sprintf("%-10s V0-V%01X,(I)", "MOVM", secondNib)
 		default:
-			return "unknown 0xfXXX opcode"
+			return UnknownOpInstruction
 		}
 	default:
-		return "unknown opcode"
+		return UnknownOpInstruction
 	}
 }
