@@ -1,9 +1,9 @@
-package disassembler_test
+package cpu_test
 
 import (
 	"testing"
 
-	"chip-8/internal/disassembler"
+	"chip-8/internal/cpu"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -12,7 +12,7 @@ import (
 func TestOpcode_Disassemble(t *testing.T) {
 	type testCase struct {
 		label               string
-		opcode              disassembler.Opcode
+		opcode              cpu.Opcode
 		expectedInstruction string
 	}
 	cases := []testCase{
@@ -200,7 +200,7 @@ func TestOpcode_Disassemble(t *testing.T) {
 func TestOpcode_DisassembleUnknownOpcodes(t *testing.T) {
 	type testCase struct {
 		label  string
-		opcode disassembler.Opcode
+		opcode cpu.Opcode
 	}
 	cases := []testCase{
 		{
@@ -224,7 +224,7 @@ func TestOpcode_DisassembleUnknownOpcodes(t *testing.T) {
 		t.Run(c.label, func(t *testing.T) {
 			_, err := c.opcode.Instruction()
 			require.Error(t, err, "should have received an error")
-			require.Equal(t, err, disassembler.ErrUnknownOp, "error is not the correct type")
+			require.Equal(t, err, cpu.ErrUnknownOp, "error is not the correct type")
 		})
 	}
 }
