@@ -2,12 +2,8 @@ package cpu
 
 import (
 	"encoding/binary"
-	"errors"
 	"fmt"
 )
-
-// ErrUnknownOp represents an unknown Opcode.
-var ErrUnknownOp = errors.New("unknown opcode")
 
 // Opcode represents a single CHIP-8 operation.
 type Opcode uint16
@@ -17,7 +13,8 @@ func (o Opcode) Bytes() (firstByte, secondByte byte) {
 	return byte(o >> 8), byte(o)
 }
 
-func OpcodeFrom(b []byte) Opcode {
+// OpcodeFromBytes takes in a slice of bytes and returns an Opcode
+func OpcodeFromBytes(b []byte) Opcode {
 	return Opcode(binary.BigEndian.Uint16(b))
 }
 
