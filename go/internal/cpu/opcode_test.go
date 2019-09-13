@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestOpcode_Disassemble(t *testing.T) {
+func TestOpcode_Instruction(t *testing.T) {
 	type testCase struct {
 		label               string
 		opcode              cpu.Opcode
@@ -193,7 +193,7 @@ func TestOpcode_Disassemble(t *testing.T) {
 	}
 }
 
-func TestOpcode_DisassembleUnknownOpcodes(t *testing.T) {
+func TestOpcode_Instruction_UnknownOpcode(t *testing.T) {
 	type testCase struct {
 		label               string
 		opcode              cpu.Opcode
@@ -203,22 +203,22 @@ func TestOpcode_DisassembleUnknownOpcodes(t *testing.T) {
 		{
 			label:               "unknown 0 code",
 			opcode:              0x0000,
-			expectedInstruction: cpu.UnknownOpInstruction,
+			expectedInstruction: "UNK        0x0000",
 		},
 		{
 			label:               "unknown 8 code",
 			opcode:              0x800f,
-			expectedInstruction: cpu.UnknownOpInstruction,
+			expectedInstruction: "UNK        0x800f",
 		},
 		{
 			label:               "unknown e code",
 			opcode:              0xe000,
-			expectedInstruction: cpu.UnknownOpInstruction,
+			expectedInstruction: "UNK        0xe000",
 		},
 		{
 			label:               "unknown f code",
 			opcode:              0xf000,
-			expectedInstruction: cpu.UnknownOpInstruction,
+			expectedInstruction: "UNK        0xf000",
 		},
 	}
 	for _, c := range cases {

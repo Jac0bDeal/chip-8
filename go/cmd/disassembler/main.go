@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	romBytes, err := rom.Load("/Users/jacobdeal/Downloads/test_opcode.ch8")
+	romBytes, err := rom.Load("./test/roms/test_opcode.ch8")
 	if err != nil {
 		log.Fatal(errors.Wrap(err, "failed to load rom file"))
 	}
