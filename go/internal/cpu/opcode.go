@@ -35,8 +35,6 @@ func (o Opcode) Instruction() string {
 			return fmt.Sprintf("%-10s", "CLS")
 		case 0xee:
 			return fmt.Sprintf("%-10s", "RTS")
-		default:
-			return fmt.Sprintf("%-10s 0x%02x%02x", "UNK", firstByte, secondByte)
 		}
 	case 0x1:
 		return fmt.Sprintf("%-10s $%01x%02x", "JUMP", secondNib, secondByte)
@@ -72,8 +70,6 @@ func (o Opcode) Instruction() string {
 			return fmt.Sprintf("%-10s V%01X,V%01X", "SUBB.", secondNib, thirdNib)
 		case 0xe:
 			return fmt.Sprintf("%-10s V%01X", "SHL.", secondNib)
-		default:
-			return fmt.Sprintf("%-10s 0x%02x%02x", "UNK", firstByte, secondByte)
 		}
 	case 0x9:
 		return fmt.Sprintf("%-10s V%01X,V%01X", "SKIP.NE", secondNib, thirdNib)
@@ -91,8 +87,6 @@ func (o Opcode) Instruction() string {
 			return fmt.Sprintf("%-10s V%01X", "SKIP.KEY", secondNib)
 		case 0xA1:
 			return fmt.Sprintf("%-10s V%01X", "SKIP.NOKEY", secondNib)
-		default:
-			return fmt.Sprintf("%-10s 0x%02x%02x", "UNK", firstByte, secondByte)
 		}
 	case 0xf:
 		switch secondByte {
@@ -114,10 +108,7 @@ func (o Opcode) Instruction() string {
 			return fmt.Sprintf("%-10s (I),V0-V%01X", "MOVM", secondNib)
 		case 0x65:
 			return fmt.Sprintf("%-10s V0-V%01X,(I)", "MOVM", secondNib)
-		default:
-			return fmt.Sprintf("%-10s 0x%02x%02x", "UNK", firstByte, secondByte)
 		}
-	default:
-		return fmt.Sprintf("%-10s 0x%02x%02x", "UNK", firstByte, secondByte)
 	}
+	return fmt.Sprintf("%-10s 0x%02x%02x", "UNK", firstByte, secondByte)
 }
