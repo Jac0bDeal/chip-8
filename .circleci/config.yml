@@ -48,7 +48,7 @@ jobs:
           command: |
             cd go
             make all
-            mv bin/ /tmp/binaries/
+            mv bin/* /tmp/binaries
       - run:
           name: Execute chip8 binary to make sure it runs
           command: ./tmp/binaries/chip8 -h
