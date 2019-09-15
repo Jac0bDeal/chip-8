@@ -46,6 +46,9 @@ jobs:
           command: |
             cd go
             make all
+      - store_artifacts:
+          path: /go/src/github.com/Jac0bDeal/chip-8/go/bin
+          destination: binaries
 
 workflows:
   version: 2
