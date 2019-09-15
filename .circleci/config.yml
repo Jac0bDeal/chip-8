@@ -22,8 +22,8 @@ jobs:
           name: Run tests
           command: |
             cd go
-            trap "/go/bin/go-junit-report <test-results/golang/go-test.out > test-results/golang/go-test-report.xml" EXIT
-            make test | tee test-results/golang/go-test.out
+            trap "go-junit-report <${TEST_RESULTS}/go-test.out > ${TEST_RESULTS}/go-test-report.xml" EXIT
+            make test | tee ${TEST_RESULTS}/go-test.out
             go tool cover -html=c.out -o coverage.html
             mkdir -p /tmp/artifacts
             my coverage.html /tmp/artifacts
