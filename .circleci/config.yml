@@ -46,6 +46,11 @@ jobs:
           command: |
             cd go
             make all
+      - run:
+          name: list
+          command: |
+            ls
+            ls bin
       - store_artifacts:
           path: bin
           destination: binaries
