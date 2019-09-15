@@ -16,11 +16,6 @@ jobs:
           name: Install go-junit-report
           command: go get -u github.com/jstemmer/go-junit-report
       - run:
-          name: Fetch dependencies
-          command: |
-            cd go
-            make deps
-      - run:
           name: Run tests
           command: |
             cd go
@@ -47,11 +42,6 @@ jobs:
     working_directory: /go/src/github.com/Jac0bDeal/chip-8/go
     steps:
       - checkout
-      - run:
-          name: Fetch dependencies
-          command: |
-            cd go
-            make deps
       - run:
           name: Build go binaries
           command: |

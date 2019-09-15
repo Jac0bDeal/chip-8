@@ -19,37 +19,37 @@ clean:
 	rm -f bin/*
 
 disassembler: test
-	@echo "---build---"
+	echo "---build---"
 	go build ${LDFLAGS} -o bin/disassemble cmd/disassembler/*
 
 deps:
-	@echo "---fetch deps---"
-	@go mod tidy
+	echo "---fetch deps---"
+	go mod tidy
 
 emulator: test
-	@echo "---build---"
+	echo "---build---"
 	go build ${LDFLAGS} -o bin/chip8 cmd/emulator/*
 
 fmt:
-	@echo "---goimports---"
+	echo "---goimports---"
 ifndef GOIMPORTS
-	@go install golang.org/x/tools/cmd/goimports
+	go install golang.org/x/tools/cmd/goimports
 endif
-	@go list -f {{.Dir}} ./... | xargs -n1 -P8 goimports -w
+	go list -f {{.Dir}} ./... | xargs -n1 -P8 goimports -w
 
 lint:
-	@echo "---golint---"
+	echo "---golint---"
 ifndef GOLINT
-	@go install golang.org/x/lint/golint
+	go install golang.org/x/lint/golint
 endif
-	@golint ./...
+	golint ./...
 
 test: deps fmt vet lint
-	@echo "---go test---"
-	@go test -count=1 --race ./...
+	echo "---go test---"
+	go test -count=1 --race ./...
 
 vet:
-	@echo "---go vet---"
-	@go vet ./...
+	echo "---go vet---"
+	go vet ./...
 
 .PHONY: disassembler emulator test clean deps fmt vet lint
