@@ -37,8 +37,6 @@ jobs:
         environment:
           GOPATH: "/go"
           GO111MODULE: "on"
-    environment:
-      BUILT_BINARIES: /tmp/binaries
     working_directory: /go/src/github.com/Jac0bDeal/chip-8/go
     steps:
       - checkout
