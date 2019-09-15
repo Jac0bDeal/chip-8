@@ -9,9 +9,10 @@ jobs:
         environment:
           GOPATH: "/go"
           GO111MODULE: "off"
-    working_directory: /go/src/github.com/Jac0bDeal/chip-8/go
+    working_directory: /go/src/github.com/Jac0bDeal/chip-8
     steps:
       - checkout
+      - run: cd go
       - run:
           name: Install go-junit-report
           command: go get -u github.com/jstemmer/go-junit-report
@@ -37,6 +38,7 @@ jobs:
     working_directory: /go/src/github.com/Jac0bDeal/chip-8/go
     steps:
       - checkout
+      - run: cd go
       - run:
           name: Build go binaries
           command: |
