@@ -3,18 +3,36 @@
 # Check https://circleci.com/docs/2.0/language-go/ for more details
 version: 2
 jobs:
-  build:
+  tests_go:
     docker:
-      # specify the version
-      - image: circleci/golang:1.13
-
-    #### TEMPLATE_NOTE: go expects specific checkout path representing url
-    #### expecting it in the form of
-    ####   /go/src/github.com/circleci/go-tool
-    ####   /go/src/bitbucket.org/circleci/go-tool
-    working_directory: /go/src/github.com/{{ORG_NAME}}/{{REPO_NAME}}/go
+      - image: circleci/golang:1.13.0
+        environment:
+          GOPATH: /go
+    working_directory: /repos/github.com/Jac0bDeal/chip-8/go
     steps:
       - checkout
+      - run: go get -u github.com/jstemmer/go-junit-report
+      - run: git status
+      - run:
+          name: Run tests
+          command: |
+            trap "/go/bin/go-junit-report <test-results/golang/go-test.out > test-results/golang/go-test-report.xml" EXIT
+            make test | tee test-results/golang/go-test.out
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: /go/src/github.com/Jac0bDeal/chip-8/go/test-results
+          destination: test-results
 
-      - run: make test
-      - run: make all
+  build_go:
+    docker:
+      - image: circleci/golang:1.13.0
+    working_directory: /repos/github.com/Jac0bDeal/chip-8/go
+    steps:
+      - checkout
+      - run:
+          name: Build go binaries
+          command: |
+            export GOPATH=/go
+            make all
+
