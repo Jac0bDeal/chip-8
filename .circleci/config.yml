@@ -30,7 +30,7 @@ jobs:
       - store_test_results:
           path: test-results
       - store_artifacts:
-          path: /go/src/github.com/Jac0bDeal/chip-8/go/test-results
+          path: $TEST_RESULTS
           destination: test-results
       - store_artifacts:
           path: /tmp/artifacts
