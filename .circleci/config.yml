@@ -49,12 +49,12 @@ jobs:
             cd go
             make all
             mv bin/ /tmp/binaries/
-      - store_artifacts:
-          path: /tmp/binaries
-          destination: binaries
       - run:
           name: Execute chip8 binary to make sure it runs
           command: ./tmp/binaries/chip8 -h
+      - store_artifacts:
+          path: /tmp/binaries
+          destination: binaries
 
 workflows:
   version: 2
