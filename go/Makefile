@@ -15,6 +15,9 @@ LDFLAGS = -ldflags "-X main.VERSION=${VERSION} -X main.COMMIT=${COMMIT} -X main.
 # Build the project
 all: clean disassembler emulator
 
+clean:
+	rm -f bin/*
+
 disassembler: test
 	@echo "---build---"
 	go build ${LDFLAGS} -o bin/disassemble cmd/disassembler/*
@@ -23,21 +26,6 @@ emulator: test
 	@echo "---build---"
 	go build ${LDFLAGS} -o bin/chip8 cmd/emulator/*
 
-lint:
-	@echo "---golint---"
-ifndef GOLINT
-	@go install golang.org/x/lint/golint
-endif
-	@golint ./...
-
-test: tidy fmt vet lint
-	@echo "---go test---"
-	@go test -count=1 --race ./...
-
-vet:
-	@echo "---go vet---"
-	@go vet ./...
-
 fmt:
 	@echo "---goimports---"
 ifndef GOIMPORTS
@@ -45,12 +33,23 @@ ifndef GOIMPORTS
 endif
 	@go list -f {{.Dir}} ./... | xargs -n1 -P8 goimports -w
 
+lint:
+	@echo "---golint---"
+ifndef GOLINT
+	@go get -u golang.org/x/lint/golint
+endif
+	@golint ./...
+
+test: tidy fmt vet lint
+	@echo "---go test---"
+	@go test -count=1 --race ./...
+
 tidy:
 	@echo "---tidy---"
 	@go mod tidy
 
-clean:
-	rm -f bin/*
-
+vet:
+	@echo "---go vet---"
+	@go vet ./...
 
 .PHONY: disassembler emulator test clean tidy fmt vet lint
