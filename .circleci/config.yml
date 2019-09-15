@@ -41,14 +41,12 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Build go binaries
+          name: Build and run binary
           command: |
             cd go
             make all
+            ./tmp/binaries/chip8 -h
             mv bin /tmp/binaries
-      - run:
-          name: Execute chip8 binary to make sure it runs
-          command: ./tmp/binaries/chip8 -h
       - store_artifacts:
           path: /tmp/binaries
           destination: binaries
