@@ -33,7 +33,7 @@ jobs:
           path: /tmp/test-results
           destination: test-results
       - store_artifacts:
-          path: /tmp/artifacts
+          path: /tmp/test-results
 
   build_go:
     docker:
