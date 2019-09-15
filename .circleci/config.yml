@@ -24,9 +24,7 @@ jobs:
             cd go
             trap "go-junit-report <${TEST_RESULTS}/go-test.out > ${TEST_RESULTS}/go-test-report.xml" EXIT
             make test.cover | tee ${TEST_RESULTS}/go-test.out
-            go tool cover -html=c.out -o coverage.html
-            mkdir -p /tmp/artifacts
-            mv coverage.html /tmp/artifacts
+            go tool cover -html=c.out -o ${TEST_RESULTS}/coverage.html
       - store_test_results:
           path: /tmp/test-results
       - store_artifacts:
