@@ -17,7 +17,7 @@ jobs:
           command: go get -u github.com/jstemmer/go-junit-report
       - run:
           name: Fetch dependencies
-          command:
+          command: |
             cd go
             make deps
       - run:
@@ -50,7 +50,7 @@ jobs:
       - run:
           name: Fetch dependencies
           command: |
-            cd
+            cd go
             make deps
       - run:
           name: Build go binaries
