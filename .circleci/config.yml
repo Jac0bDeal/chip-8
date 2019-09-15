@@ -40,7 +40,7 @@ jobs:
     working_directory: /go/src/github.com/Jac0bDeal/chip-8/go
     steps:
       - checkout
-      - run: mkdir -p $BUILT_BINARIES
+      - run: mkdir /tmp
       - run:
           name: Build go binaries
           command: |
