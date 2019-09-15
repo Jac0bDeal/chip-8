@@ -22,6 +22,10 @@ disassembler: test
 	@echo "---build---"
 	go build ${LDFLAGS} -o bin/disassemble cmd/disassembler/*
 
+deps:
+	@echo "---fetch deps---"
+	@go mod tidy
+
 emulator: test
 	@echo "---build---"
 	go build ${LDFLAGS} -o bin/chip8 cmd/emulator/*
@@ -43,10 +47,6 @@ endif
 test: tidy fmt vet lint
 	@echo "---go test---"
 	@go test -count=1 --race ./...
-
-tidy:
-	@echo "---tidy---"
-	@go mod tidy
 
 vet:
 	@echo "---go vet---"
