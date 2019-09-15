@@ -28,9 +28,9 @@ jobs:
             mkdir -p /tmp/artifacts
             mv coverage.html /tmp/artifacts
       - store_test_results:
-          path: ${TEST_RESULTS}
+          path: /tmp/test-results
       - store_artifacts:
-          path: /${TEST_RESULTS}
+          path: /tmp/test-results
           destination: test-results
       - store_artifacts:
           path: /tmp/artifacts
