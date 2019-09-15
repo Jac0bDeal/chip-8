@@ -9,12 +9,12 @@ a first foray into emulators and is not intended
 to serve as a polished product.
 
 ## Build
-Building the binaries is super simple (given you have `make` installed, which you should):
+Building the binary is super simple (given you have `make` installed, which you should):
 ```shell
 make
 ```
 
-Binaries are built and found inside the `bin/` directory when using `make`.
+Binary is built and found inside the `bin/` directory when using `make`.
 
 Cleaning up the project can be done with:
 ```shell
@@ -27,23 +27,23 @@ make test
 ```
 
 ## Usage
-There are two binaries built by the project:
-- [diassemble](#disassembler)
-- [chip8](#emulator)
+The main purpose of chip8 is to load and run a CHIP-8 ROM in the emulator:
+
+```shell
+chip8 <filepath>
+```
 
 ### Disassembler
-The disassembler is a CLI that reads in a ROM file and dumps the diassembled instructions
+The disassembler subcommand reads in a ROM file and dumps the diassembled instructions
 to either stdout or a file for inspection.
 
 Disassemble ROM and print to stdout:
 ```shell
-disassemble <filepath>
+chip8 disassemble <filepath>
 ```
 
 Disassemble ROM and dump to file:
 ```shell
-disassemble <filepath> -o <filepath>
+chip8 disassemble <filepath> -output <filepath>
+chip8 disassemble <filepath> -o <filepath>
 ```
-
-### Emulator
-Not implemented yet, coming soon!
