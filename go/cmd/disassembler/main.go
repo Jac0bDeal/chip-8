@@ -1,10 +1,11 @@
 package main
 
 import (
-	"chip-8/internal/rom"
 	"io"
 	"log"
 	"os"
+
+	"chip-8/internal/rom"
 
 	"github.com/pkg/errors"
 )

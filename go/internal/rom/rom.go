@@ -2,10 +2,11 @@ package rom
 
 import (
 	"bytes"
-	"chip-8/internal/cpu"
 	"fmt"
 	"io"
 	"io/ioutil"
+
+	"chip-8/internal/cpu"
 
 	"github.com/pkg/errors"
 )

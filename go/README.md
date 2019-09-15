@@ -7,6 +7,44 @@ This project is mostly for academic purposes as
 a first foray into emulators and is not intended
 to serve as a polished product.
 
+## Build
+Building the binaries is super simple (given you have `make` installed, which you should):
+```shell
+make
+```
+
+Cleaning up the project can be done with:
+```shell
+make clean
+```
+
+To run just the tests run:
+```shell
+make test
+```
+
+## Usage
+There are two binaries built by the project:
+- [diassemble](#disassembler)
+- [chip8](#emulator)
+
+### Disassembler
+The disassembler is a CLI that reads in a ROM file and dumps the diassembled instructions
+to either stdout or a file for inspection.
+
+Disassemble ROM and print to stdout:
+```shell
+disassemble <filepath>
+```
+
+Disassemble ROM and dump to file:
+```shell
+disassemble <filepath> -o <filepath>
+```
+
+### Emulator
+Not implemented yet, coming soon!
+
 ## References
 - [Cowgod's CHIP-8 Technical Reference v1.0](http://devernay.free.fr/hacks/chip8/C8TECH10.HTM)
 - [Laurence Muller's Tutorial](http://www.multigesture.net/articles/how-to-write-an-emulator-chip-8-interpreter/)
