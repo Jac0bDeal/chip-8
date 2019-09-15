@@ -26,7 +26,7 @@ jobs:
             make test.cover | tee ${TEST_RESULTS}/go-test.out
             go tool cover -html=c.out -o coverage.html
             mkdir -p /tmp/artifacts
-            my coverage.html /tmp/artifacts
+            mv coverage.html /tmp/artifacts
       - store_test_results:
           path: test-results
       - store_artifacts:
