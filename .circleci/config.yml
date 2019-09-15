@@ -7,22 +7,29 @@ jobs:
     docker:
       - image: circleci/golang:1.13.0
         environment:
-          GOPATH: /go
+          GOPATH: "/go"
+          GO111MODULE: "off"
     working_directory: /go/src/github.com/Jac0bDeal/chip-8/go
     steps:
       - checkout
-      - run: go get -u github.com/jstemmer/go-junit-report
-      - run: git status
+      - run:
+          name: Install go-junit-report
+          command: go get -u github.com/jstemmer/go-junit-report
       - run:
           name: Run tests
           command: |
             trap "/go/bin/go-junit-report <test-results/golang/go-test.out > test-results/golang/go-test-report.xml" EXIT
             make test | tee test-results/golang/go-test.out
+            go tool cover -html=c.out -o coverage.html
+            mkdir -p /tmp/artifacts
+            my coverage.html /tmp/artifacts
       - store_test_results:
           path: test-results
       - store_artifacts:
           path: /go/src/github.com/Jac0bDeal/chip-8/go/test-results
           destination: test-results
+      - store_artifacts:
+          path: /tmp/artifacts
 
   build_go:
     docker:
