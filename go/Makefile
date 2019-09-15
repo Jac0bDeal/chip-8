@@ -44,7 +44,7 @@ ifndef GOLINT
 endif
 	@golint ./...
 
-test: tidy fmt vet lint
+test: deps fmt vet lint
 	@echo "---go test---"
 	@go test -count=1 --race ./...
 
@@ -52,4 +52,4 @@ vet:
 	@echo "---go vet---"
 	@go vet ./...
 
-.PHONY: disassembler emulator test clean tidy fmt vet lint
+.PHONY: disassembler emulator test clean deps fmt vet lint
