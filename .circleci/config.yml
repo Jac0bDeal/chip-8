@@ -52,6 +52,9 @@ jobs:
       - store_artifacts:
           path: /tmp/binaries
           destination: binaries
+      - run:
+          name: Execute chip8 binary to make sure it runs
+          command: ./tmp/binaries/chip8 -h
 
 workflows:
   version: 2
