@@ -29,14 +29,14 @@ emulator: test
 fmt:
 	@echo "---goimports---"
 ifndef GOIMPORTS
-	@go install golang.org/x/
+	@go install golang.org/x/tools/cmd/goimports
 endif
 	@go list -f {{.Dir}} ./... | xargs -n1 -P8 goimports -w
 
 lint:
 	@echo "---golint---"
 ifndef GOLINT
-	@go get -u golang.org/x/lint/golint
+	@go install -u golang.org/x/lint/golint
 endif
 	@golint ./...
 
