@@ -8,43 +8,50 @@ jobs:
       - image: circleci/golang:1.13.0
         environment:
           GOPATH: "/go"
-          GO111MODULE: "off"
-    working_directory: /go/src/github.com/Jac0bDeal/chip-8
+          GO111MODULE: "on"
+    environment:
+      TEST_RESULTS: /tmp/test-results
+    working_directory: /go/src/github.com/Jac0bDeal/chip-8/go
     steps:
       - checkout
-      - run: cd go
+      - run: mkdir -p $TEST_RESULTS
       - run:
           name: Install go-junit-report
           command: go get -u github.com/jstemmer/go-junit-report
       - run:
           name: Run tests
           command: |
-            pwd
-            trap "/go/bin/go-junit-report <test-results/golang/go-test.out > test-results/golang/go-test-report.xml" EXIT
-            make test | tee test-results/golang/go-test.out
-            go tool cover -html=c.out -o coverage.html
-            mkdir -p /tmp/artifacts
-            my coverage.html /tmp/artifacts
+            cd go
+            trap "go-junit-report <${TEST_RESULTS}/go-test.out > ${TEST_RESULTS}/go-test-report.xml" EXIT
+            make test.cover | tee ${TEST_RESULTS}/go-test.out
+            go tool cover -html=c.out -o ${TEST_RESULTS}/coverage.html
       - store_test_results:
-          path: test-results
+          path: /tmp/test-results
       - store_artifacts:
-          path: /go/src/github.com/Jac0bDeal/chip-8/go/test-results
+          path: /tmp/test-results
           destination: test-results
-      - store_artifacts:
-          path: /tmp/artifacts
 
   build_go:
     docker:
       - image: circleci/golang:1.13.0
+        environment:
+          GOPATH: "/go"
+          GO111MODULE: "on"
+    environment:
+      BUILT_BINARIES: /tmp/binaries
     working_directory: /go/src/github.com/Jac0bDeal/chip-8/go
     steps:
       - checkout
-      - run: cd go
+      - run: mkdir -p $BUILT_BINARIES
       - run:
           name: Build go binaries
           command: |
-            export GOPATH=/go
+            cd go
             make all
+            mv bin/ /tmp/binaries/
+      - store_artifacts:
+          path: /tmp/binaries
+          destination: binaries
 
 workflows:
   version: 2

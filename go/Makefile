@@ -15,42 +15,45 @@ LDFLAGS = -ldflags "-X main.VERSION=${VERSION} -X main.COMMIT=${COMMIT} -X main.
 # Build the project
 all: clean disassembler emulator
 
-disassembler: test
-	@echo "---build---"
-	go build ${LDFLAGS} -o bin/disassemble cmd/disassembler/*
-
-emulator: test
-	@echo "---build---"
-	go build ${LDFLAGS} -o bin/chip8 cmd/emulator/*
-
-lint:
-	@echo "---golint---"
-ifndef GOLINT
-	@go install golang.org/x/lint/golint
-endif
-	@golint ./...
-
-test: tidy fmt vet lint
-	@echo "---go test---"
-	@go test -count=1 --race ./...
-
-vet:
-	@echo "---go vet---"
-	@go vet ./...
-
-fmt:
-	@echo "---goimports---"
-ifndef GOIMPORTS
-	@go install golang.org/x/
-endif
-	@go list -f {{.Dir}} ./... | xargs -n1 -P8 goimports -w
-
-tidy:
-	@echo "---tidy---"
-	@go mod tidy
-
 clean:
 	rm -f bin/*
 
+disassembler: test
+	echo "---build disassembler---"
+	go build ${LDFLAGS} -o bin/disassemble cmd/disassembler/*
 
-.PHONY: disassembler emulator test clean tidy fmt vet lint
+deps:
+	echo "---fetch deps---"
+	go mod tidy
+
+emulator: test
+	echo "---build emulator---"
+	go build ${LDFLAGS} -o bin/chip8 cmd/emulator/*
+
+fmt:
+	echo "---goimports---"
+ifndef GOIMPORTS
+	go install golang.org/x/tools/cmd/goimports
+endif
+	go list -f {{.Dir}} ./... | xargs -n1 -P8 goimports -w
+
+lint:
+	echo "---golint---"
+ifndef GOLINT
+	go install golang.org/x/lint/golint
+endif
+	golint ./...
+
+test: deps fmt vet lint
+	echo "---go test---"
+	go test -count=1 --race ./...
+
+test.cover: deps fmt vet lint
+	echo "---go test w/ coverage---"
+	go test -count=1 -coverprofile=c.out -race ./...
+
+vet:
+	echo "---go vet---"
+	go vet ./...
+
+.PHONY: disassembler emulator test clean deps fmt vet lint
