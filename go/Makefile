@@ -48,6 +48,10 @@ test: deps fmt vet lint
 	echo "---go test---"
 	go test -count=1 --race ./...
 
+test.cover: deps fmt vet lint
+	echo "---go test w/ coverage---"
+	go test -count=1 -coverprofile=c.out -race ./...
+
 vet:
 	echo "---go vet---"
 	go vet ./...
