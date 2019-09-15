@@ -36,3 +36,11 @@ jobs:
             export GOPATH=/go
             make all
 
+workflows:
+  version: 2
+  go_workflow:
+    jobs:
+      - tests_go:
+      - build_go:
+          requires:
+          - tests_go
