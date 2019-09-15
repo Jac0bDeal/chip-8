@@ -37,22 +37,20 @@ jobs:
         environment:
           GOPATH: "/go"
           GO111MODULE: "on"
-
+    environment:
+      BUILT_BINARIES: /tmp/binaries
     working_directory: /go/src/github.com/Jac0bDeal/chip-8/go
     steps:
       - checkout
+      - run: mkdir -p $BUILT_BINARIES
       - run:
           name: Build go binaries
           command: |
             cd go
             make all
-      - run:
-          name: list
-          command: |
-            ls
-            ls bin
+            mv bin/ /tmp/binaries/
       - store_artifacts:
-          path: bin
+          path: /tmp/binaries
           destination: binaries
 
 workflows:
