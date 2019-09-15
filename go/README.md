@@ -1,7 +1,7 @@
 # CHIP-8 Emulator: Go Implementation
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/Jac0bDeal/chip-8)](https://goreportcard.com/report/github.com/Jac0bDeal/chip-8)
-[![CircleCI](https://circleci.com/gh/Jac0bDeal/chip-8.svg?style=svg)](https://circleci.com/gh/Jac0bDeal/chip-8)
+[![CircleCI](https://circleci.com/gh/Jac0bDeal/chip-8.svg?style=shield)](https://circleci.com/gh/Jac0bDeal/chip-8)
 
 A Go implementation of the CHIP-8 emulator. 
 This project is mostly for academic purposes as 
