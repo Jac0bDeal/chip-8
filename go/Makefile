@@ -36,7 +36,7 @@ endif
 lint:
 	@echo "---golint---"
 ifndef GOLINT
-	@go install -u golang.org/x/lint/golint
+	@go install golang.org/x/lint/golint
 endif
 	@golint ./...
 
