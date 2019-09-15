@@ -19,7 +19,7 @@ clean:
 	rm -f bin/*
 
 disassembler: test
-	echo "---build---"
+	echo "---build disassembler---"
 	go build ${LDFLAGS} -o bin/disassemble cmd/disassembler/*
 
 deps:
@@ -27,7 +27,7 @@ deps:
 	go mod tidy
 
 emulator: test
-	echo "---build---"
+	echo "---build emulator---"
 	go build ${LDFLAGS} -o bin/chip8 cmd/emulator/*
 
 fmt:
