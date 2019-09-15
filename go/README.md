@@ -13,6 +13,8 @@ Building the binaries is super simple (given you have `make` installed, which yo
 make
 ```
 
+Binaries are built and found inside the `bin/` directory when using `make`.
+
 Cleaning up the project can be done with:
 ```shell
 make clean
