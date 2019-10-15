@@ -7,8 +7,8 @@ import (
 )
 
 type (
-	opDecoder func(Opcode) operation
 	operation func() error
+	opDecoder func(Opcode) operation
 )
 
 // NewCPU constructs and returns a pointer to a CPU instance with the
@@ -60,12 +60,12 @@ func (c *CPU) Cycle() {
 }
 
 func (c CPU) registerOpDecoder() {
-	var _0x0map = map[byte]func() error{
+	var _0x0map = map[byte]operation{
 		0x00: c._0x0000,
 		0xe0: c._0x00E0,
 		0xee: c._0x00EE,
 	}
-	var _0x8map = map[byte]func() error{
+	var _0x8map = map[byte]operation{
 		0x0: c._0x8xy0,
 		0x1: c._0x8xy1,
 		0x2: c._0x8xy2,
@@ -76,11 +76,11 @@ func (c CPU) registerOpDecoder() {
 		0x7: c._0x8xy7,
 		0xe: c._0x8xyE,
 	}
-	var _0xEmap = map[byte]func() error{
+	var _0xEmap = map[byte]operation{
 		0x9e: c._0xEx9E,
 		0xa1: c._0xExA1,
 	}
-	var _0xFmap = map[byte]func() error{
+	var _0xFmap = map[byte]operation{
 		0x07: c._0xFx07,
 		0x0a: c._0xFx0A,
 		0x15: c._0xFx15,
