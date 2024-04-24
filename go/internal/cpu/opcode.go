@@ -3,6 +3,8 @@ package cpu
 import (
 	"encoding/binary"
 	"fmt"
+
+	"github.com/pkg/errors"
 )
 
 // Opcode represents a single CHIP-8 operation.
@@ -17,6 +19,8 @@ func (o Opcode) Bytes() (firstByte, secondByte byte) {
 func OpcodeFromBytes(b []byte) Opcode {
 	return Opcode(binary.BigEndian.Uint16(b))
 }
+
+var ErrUnknownOpcode = errors.New("unknown opcode")
 
 // Instruction returns the Opcode's name and instruction. If the Opcode is
 // unknown then ErrUnknownOp will be returned.
